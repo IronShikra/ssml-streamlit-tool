@@ -47,8 +47,9 @@ tag_descriptions = {
 }
 
 # Show behavior description
-if selected_tag != "Select a tag...":
-    st.sidebar.markdown(f"**Tag behavior:** {tag_descriptions.get(selected_tag, 'Unknown behavior')}")
+if selected_tag and selected_tag != "Select a tag...":
+    behavior_text = tag_descriptions.get(selected_tag, "Unknown behavior")
+    st.sidebar.markdown(f"<span style='font-size: 0.85em; color: gray;'>Tag behavior: {behavior_text}</span>", unsafe_allow_html=True)
     # [Your tag-specific input logic here]
 
 tag_params = {}  # Store parameters to build the tag
