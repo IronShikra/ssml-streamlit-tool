@@ -52,8 +52,7 @@ st.write("Add prosody and pauses to SSML text.")
 # === SIDEBAR CONTROLS ===
 with st.sidebar:
     st.markdown("## Settings")
-    test_box = st.checkbox("Test Sidebar Checkbox")
-
+   
     # Section: Wrapper
     st.markdown("### Wrap Output")
     wrap_speak = st.checkbox("Wrap the SSML output in `<speak>` tags", value=True)
@@ -82,7 +81,8 @@ input_text = st.text_area("Paste your text here", height=200)
 
 # Generate Button
 if st.button("Generate SSML Output"):
-    output_text = generate_ssml(input_text)  # ✅ This line must be indented
+    input_text = st.session_state.get("input_text", "")
+    output_text = generate_ssml(input_text)
 
 # SSML output
 st.text_area("Generated SSML Output", value=output_text, height=300)
