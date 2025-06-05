@@ -1,0 +1,5 @@
+{
+    "Default": "<speak><prosody rate=\"100%\" pitch=\"medium\" volume=\"medium\">Your text here</prosody></speak>",
+    "Slower Rate": "<speak><prosody rate=\"80%\" pitch=\"medium\" volume=\"medium\">Your text here</prosody></speak>",
+    "Faster Rate": "<speak><prosody rate=\"120%\" pitch=\"medium\" volume=\"medium\">Your text here</prosody></speak>"
+}
