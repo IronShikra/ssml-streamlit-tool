@@ -82,7 +82,7 @@ input_text = st.text_area("Paste your text here", height=200)
 
 # Generate Button
 if st.button("Generate SSML Output"):
-    # (your logic)
+    output_text = generate_ssml(input_text)  # ✅ This line must be indented
 
 # SSML output
 st.text_area("Generated SSML Output", value=output_text, height=300)
