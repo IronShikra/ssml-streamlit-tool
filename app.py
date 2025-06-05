@@ -73,16 +73,20 @@ with st.sidebar:
     # (existing preset controls stay here)
 
 
-# === MAIN PANEL ===
-st.markdown("## SSML Tagging Tool")
+# --- MAIN PANEL ---
 
-# Text input
-input_text = st.text_area("Paste your text here", height=200)
+st.title("SSML Tagging Tool")
 
-# Generate Button
+# Text input area (where users paste their script)
+input_text = st.text_area("Paste your script text here", height=300)
+
+# Define output_text with a default to avoid NameError
+output_text = ""
+
+# Generate SSML Output button
 if st.button("Generate SSML Output"):
-    input_text = st.session_state.get("input_text", "")
+    # Replace this with your actual SSML generation logic
     output_text = generate_ssml(input_text)
 
-# SSML output
+# Output area for SSML
 st.text_area("Generated SSML Output", value=output_text, height=300)
