@@ -56,7 +56,7 @@ selected_preset = st.selectbox("Select a preset", preset_names)
 selected_tags = presets.get(selected_preset, "")
 
 # Prosody settings
-rate = st.select_slider("Whole track prosody rate", options=["80%", "90%", "100%", "110%", "120%"], value="100%")
+rate = st.slider("Whole track prosody rate", min_value=20, max_value=200, value=100, step=10, format="%d%%")
 pitch = st.selectbox("Whole track prosody pitch", options=["x-low", "low", "medium", "high", "x-high"], index=2)
 volume = st.selectbox("Whole track prosody volume", options=["silent", "x-soft", "soft", "medium", "loud", "x-loud"], index=3)
 
