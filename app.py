@@ -49,20 +49,39 @@ def add_ssml_tags(text, add_s_and_p, add_em_dash):
 st.title("SSML Tagging Tool (Web Version)")
 st.write("Add prosody and pauses to SSML text.")
 
-# Presets
-presets = load_presets()
-preset_names = list(presets.keys())
-selected_preset = st.selectbox("Select a preset", preset_names)
-selected_tags = presets.get(selected_preset, "")
+# === Section 1: Wrapper Tag ===
+st.markdown("### 🗂 Wrap Output")
+wrap_speak = st.checkbox("Wrap the SSML output in `<speak></speak>` tags", value=True, help="Required by most TTS platforms.")
+
+# === Section 2: Whole Track Prosody ===
+st.markdown("### 🎵 Whole Track Prosody")
+col1, col2, col3 = st.columns(3)
+with col1:
+    prosody_rate = st.slider("Rate (%)", min_value=20, max_value=200, value=100, help="Controls speaking rate.")
+with col2:
+    prosody_pitch = st.selectbox("Pitch", ["x-low", "low", "medium", "high", "x-high"], index=2)
+with col3:
+    prosody_volume = st.selectbox("Volume", ["silent", "x-soft", "soft", "medium", "loud", "x-loud"], index=3)
 
 # Prosody settings
 rate = st.slider("Whole track prosody rate", min_value=20, max_value=200, value=100, step=10, format="%d%%")
 pitch = st.selectbox("Whole track prosody pitch", options=["x-low", "low", "medium", "high", "x-high"], index=2)
 volume = st.selectbox("Whole track prosody volume", options=["silent", "x-soft", "soft", "medium", "loud", "x-loud"], index=3)
 
+# === Section 3: Pauses ===
+st.markdown("### ⏸️ Pauses – All Sentences and Paragraphs")
+pause_ssml = st.checkbox("Add brief pauses using `<s>` and `<p>` tags")
+pause_dash = st.checkbox("Add a longer pause using —")
+
 # Toggles
 add_s_and_p = st.checkbox("Add brief pauses after sentences and paragraphs using <s> and <p> tags")
 add_em_dash = st.checkbox("Add a longer pause after sentences using —")
+
+# Presets
+presets = load_presets()
+preset_names = list(presets.keys())
+selected_preset = st.selectbox("Select a preset", preset_names)
+selected_tags = presets.get(selected_preset, "")
 
 # Input text
 input_text = st.text_area("Paste or type your text below:", height=200)
