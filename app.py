@@ -23,9 +23,11 @@ pause_dash = st.sidebar.checkbox("Add a longer pause after sentences using —")
 st.sidebar.markdown("### Additional Tags")
 
 tag_options = ["Select a tag...", "<emphasis>", "<say-as>", "<sub>", "<lang>", "<voice>", "<phoneme>", "<break>"]
-selected_tag = st.sidebar.selectbox("Insert Tag", tag_options)
-
-
+selected_tag = st.sidebar.selectbox(
+    "Insert Tag",
+    ["Select a tag...", "<emphasis>", "<say-as>", "<sub>", "<lang>", "<voice>", "<phoneme>", "<break>"],
+    help="Choose a tag to apply. Tags either wrap selected text or insert at cursor."
+)
 
 # Define descriptions for each tag based on the reference guide
 tag_descriptions = {
@@ -52,7 +54,11 @@ if selected_tag != "Select a tag...":
 tag_params = {}  # Store parameters to build the tag
 
 if selected_tag == "<emphasis>":
-    tag_params["level"] = st.sidebar.selectbox("Level", ["strong", "moderate", "reduced"])
+    tag_params["level"] = st.sidebar.selectbox(
+        "Level",
+        ["strong", "moderate", "reduced"],
+        help="Wraps selected text to add vocal emphasis."
+    )
 
 elif selected_tag == "<say-as>":
     tag_params["interpret-as"] = st.sidebar.selectbox(
