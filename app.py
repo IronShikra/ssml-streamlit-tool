@@ -46,7 +46,7 @@ tag_descriptions = {
 
 # Show behavior description
 if selected_tag:
-    st.markdown(f"**Tag behavior:** {tag_descriptions.get(selected_tag, 'Unknown behavior')}")
+    st.sidebar.markdown(f"**Tag behavior:** {tag_descriptions.get(selected_tag, 'Unknown behavior')}")
 
 tag_params = {}  # Store parameters to build the tag
 
