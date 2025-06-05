@@ -22,10 +22,10 @@ pause_dash = st.sidebar.checkbox("Add a longer pause after sentences using —")
 # ─────────────────────────────
 st.sidebar.markdown("### Additional Tags")
 
-selected_tag = st.sidebar.selectbox(
-    "Insert Tag",
-    ["<emphasis>", "<say-as>", "<sub>", "<lang>", "<voice>", "<phoneme>", "<break>"]
-)
+tag_options = ["Select a tag...", "<emphasis>", "<say-as>", "<sub>", "<lang>", "<voice>", "<phoneme>", "<break>"]
+selected_tag = st.sidebar.selectbox("Insert Tag", tag_options)
+
+
 
 # Define descriptions for each tag based on the reference guide
 tag_descriptions = {
@@ -45,8 +45,9 @@ tag_descriptions = {
 }
 
 # Show behavior description
-if selected_tag:
+if selected_tag != "Select a tag...":
     st.sidebar.markdown(f"**Tag behavior:** {tag_descriptions.get(selected_tag, 'Unknown behavior')}")
+    # [Your tag-specific input logic here]
 
 tag_params = {}  # Store parameters to build the tag
 
