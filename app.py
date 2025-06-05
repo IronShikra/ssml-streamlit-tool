@@ -54,7 +54,11 @@ if selected_tag == "<emphasis>":
     tag_params["level"] = st.sidebar.selectbox("Level", ["strong", "moderate", "reduced"])
 
 elif selected_tag == "<say-as>":
-    tag_params["interpret-as"] = st.sidebar.selectbox("Interpret As", ["date", "time", "digits", "fraction", "characters"])
+    tag_params["interpret-as"] = st.sidebar.selectbox(
+    "Interpret As",
+    ["date", "time", "digits", "fraction", "characters"],
+    help="Controls how the text is read aloud. For example, 'digits' reads numbers individually."
+)
 
 elif selected_tag == "<sub>":
     tag_params["alias"] = st.sidebar.text_input("Alias (replacement text)")
