@@ -27,6 +27,24 @@ selected_tag = st.sidebar.selectbox(
     ["<emphasis>", "<say-as>", "<sub>", "<lang>", "<voice>", "<phoneme>", "<break>"]
 )
 
+# Example logic after the user selects a tag
+if selected_tag:
+    st.subheader("Tag Behavior")
+
+    tag_descriptions = {
+        "<prosody>": "Wraps selected text (paired tag)",
+        "<break>": "Inserts at cursor (self-closing tag)",
+        "<emphasis>": "Wraps selected text (paired tag)",
+        "<speak>": "Wraps entire SSML output (wrapper tag)",
+        "<phoneme>": "Wraps selected text (paired tag)",
+        "<amazon:auto-breaths>": "Wraps selected text (paired tag)",
+        "<p>": "Wraps selected text (paired tag)",
+        "<s>": "Wraps selected text (paired tag)",
+    }
+
+    tag_behavior = tag_descriptions.get(selected_tag, "Tag behavior info not available.")
+    st.markdown(f"**Tag behavior:** {tag_behavior}")
+
 tag_params = {}  # Store parameters to build the tag
 
 if selected_tag == "<emphasis>":
