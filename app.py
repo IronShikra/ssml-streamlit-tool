@@ -29,19 +29,19 @@ selected_tag = st.sidebar.selectbox(
 
 # Define descriptions for each tag based on the reference guide
 tag_descriptions = {
-    "<speak>": "Wraps entire SSML output (wrapper tag)",
-    "<prosody>": "Wraps selected text (paired tag)",
-    "<break>": "Inserts at cursor (self-closing tag)",
-    "<emphasis>": "Wraps selected text (paired tag)",
-    "<say-as>": "Wraps selected text (paired tag)",
-    "<sub>": "Wraps selected text (paired tag)",
-    "<lang>": "Wraps selected text (paired tag)",
-    "<p>": "Wraps selected text (paired tag)",
-    "<s>": "Wraps selected text (paired tag)",
-    "<voice>": "Wraps selected text (paired tag)",
-    "<amazon:auto-breaths>": "Wraps selected text (paired tag)",
-    "<amazon:effect>": "Wraps selected text (paired tag)",
-    "<phoneme>": "Wraps selected text (paired tag)"
+    "<speak>": "Wraps entire SSML output",
+    "<prosody>": "Wraps selected text",
+    "<break>": "Inserts at cursor",
+    "<emphasis>": "Wraps selected text",
+    "<say-as>": "Wraps selected text",
+    "<sub>": "Wraps selected text",
+    "<lang>": "Wraps selected text",
+    "<p>": "Wraps selected text",
+    "<s>": "Wraps selected text",
+    "<voice>": "Wraps selected text",
+    "<amazon:auto-breaths>": "Wraps selected text",
+    "<amazon:effect>": "Wraps selected text",
+    "<phoneme>": "Wraps selected text"
 }
 
 # Show behavior description
