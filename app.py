@@ -52,6 +52,7 @@ st.write("Add prosody and pauses to SSML text.")
 # === SIDEBAR CONTROLS ===
 with st.sidebar:
     st.markdown("## Settings")
+    test_box = st.checkbox("Test Sidebar Checkbox")
 
     # Section: Wrapper
     st.markdown("### Wrap Output")
