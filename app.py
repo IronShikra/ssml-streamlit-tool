@@ -88,8 +88,26 @@ elif selected_tag == "<break>":
     else:
         tag_params["time"] = st.sidebar.text_input("Time (e.g., 500ms)")
 
-if st.sidebar.button("Insert Tag"):
-    tag_text = ""
+elif selected_tag == "<phoneme>":
+    alphabet = tag_params.get("alphabet", "ipa")
+    ph = tag_params.get("ph", "")
+    tag_text = f"<phoneme alphabet=\"{alphabet}\" ph=\"{ph}\">{{text}}</phoneme>"
+
+elif selected_tag == "<break>":
+    if "strength" in tag_params:
+        strength = tag_params["strength"]
+        tag_text = f"<break strength=\"{strength}\"/>"
+    elif "time" in tag_params:
+        time = tag_params["time"]
+        tag_text = f"<break time=\"{time}\"/>"
+
+# === INSERT BLOCK STARTS HERE ===
+if "{{text}}" in tag_text:
+    tag_text = tag_text.replace("{{text}}", "your text here")
+
+st.session_state.input_text_area = st.session_state.get("input_text_area", "") + tag_text
+# === INSERT BLOCK ENDS HERE ===
+
 
     if selected_tag == "<emphasis>":
         level = tag_params.get("level", "moderate")
