@@ -108,7 +108,8 @@ st.markdown(
 
 st.title("SSML Tagging Tool")
 
-input_text = st.text_area("Paste your script text here", height=300)
+input_text = st.text_area("Paste your script text here", key="input_text_area", height=300)
+
 output_text = ""
 
 def generate_ssml(text):
