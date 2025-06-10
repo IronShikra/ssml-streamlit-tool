@@ -168,8 +168,10 @@ if st.button("Generate SSML Output"):
         st.warning("Input text is empty or editor failed to load.")
         output_text = ""
     else:
-        st.session_state["ace_editor"] = input_text
+        if input_text is not None:
+            st.session_state.update({"ace_editor": input_text})
         output_text = generate_ssml(input_text)
+
         st.session_state.generated_output = output_text
 else:
     output_text = st.session_state.get("generated_output", "")
