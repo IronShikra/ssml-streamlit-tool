@@ -131,6 +131,15 @@ if st.sidebar.button("Insert Tag"):
         st.session_state.input_text_area += tag_text
 
 # --- MAIN PANEL ---
+st.markdown(
+    """
+    <div style="background-color:#f0f2f6; padding:10px; border-left: 4px solid #1e90ff;">
+        <strong>Note:</strong> If this app was asleep, it may take a few seconds to wake up. Please wait briefly and try again if needed.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 st.title("SSML Tagging Tool")
 
 input_text = st.text_area("Paste your script text here", height=300)
