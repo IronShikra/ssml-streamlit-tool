@@ -89,8 +89,46 @@ elif selected_tag == "<break>":
         tag_params["time"] = st.sidebar.text_input("Time (e.g., 500ms)")
 
 if st.sidebar.button("Insert Tag"):
-    st.warning("Tag insertion not wired up yet — coming in next step!")
+    tag_text = ""
 
+    if selected_tag == "<emphasis>":
+        level = tag_params.get("level", "moderate")
+        tag_text = f"<emphasis level=\"{level}\">{{text}}</emphasis>"
+
+    elif selected_tag == "<say-as>":
+        interpret_as = tag_params.get("interpret-as", "characters")
+        tag_text = f"<say-as interpret-as=\"{interpret_as}\">{{text}}</say-as>"
+
+    elif selected_tag == "<sub>":
+        alias = tag_params.get("alias", "")
+        tag_text = f"<sub alias=\"{alias}\">{{text}}</sub>"
+
+    elif selected_tag == "<lang>":
+        lang = tag_params.get("xml:lang", "en-US")
+        tag_text = f"<lang xml:lang=\"{lang}\">{{text}}</lang>"
+
+    elif selected_tag == "<voice>":
+        voice = tag_params.get("name", "")
+        tag_text = f"<voice name=\"{voice}\">{{text}}</voice>"
+
+    elif selected_tag == "<phoneme>":
+        alphabet = tag_params.get("alphabet", "ipa")
+        ph = tag_params.get("ph", "")
+        tag_text = f"<phoneme alphabet=\"{alphabet}\" ph=\"{ph}\">{{text}}</phoneme>"
+
+    elif selected_tag == "<break>":
+        if "strength" in tag_params:
+            strength = tag_params["strength"]
+            tag_text = f"<break strength=\"{strength}\"/>"
+        elif "time" in tag_params:
+            time = tag_params["time"]
+            tag_text = f"<break time=\"{time}\"/>"
+
+    # Insert tag logic
+    if "{{text}}" in tag_text:
+        st.session_state.input_text_area += tag_text.replace("{{text}}", "your text here")
+    else:
+        st.session_state.input_text_area += tag_text
 
 # --- MAIN PANEL ---
 st.title("SSML Tagging Tool")
