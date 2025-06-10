@@ -89,12 +89,23 @@ if selected_tag != "Select a tag...":
             time = st.sidebar.text_input("Time (e.g., 500ms)")
             tag_text = f"<break time=\"{time}\"/>"
 
-    # Insert tag on button click
-    if st.sidebar.button("Insert Tag"):
-        if "{{text}}" in tag_text:
-            tag_text = tag_text.replace("{{text}}", "your text here")
-        st.session_state.input_text_area = st.session_state.get("input_text_area", "") + tag_text
+# Insert tag on button click
+if st.sidebar.button("Insert Tag"):
+    current_text = st.session_state.get("ace_editor", "")
+    selection = st.session_state.get("ace_selection", "")
+    tag_text_to_insert = tag_text
 
+    if "{{text}}" in tag_text_to_insert:
+        if selection:
+            tag_text_to_insert = tag_text_to_insert.replace("{{text}}", selection)
+            updated_text = current_text.replace(selection, tag_text_to_insert, 1)
+        else:
+            tag_text_to_insert = tag_text_to_insert.replace("{{text}}", "your text here")
+            updated_text = current_text + tag_text_to_insert
+    else:
+        updated_text = current_text + tag_text_to_insert
+
+    st.session_state["ace_editor"] = updated_text
 
 # --- MAIN PANEL ---
 from streamlit_ace import st_ace
@@ -124,6 +135,32 @@ input_text = st_ace(
     show_print_margin=False,
     wrap=True
 )
+
+# Generate SSML function
+def generate_ssml(text):
+    import re
+
+    # Clean up extra whitespace
+    text = re.sub(r'\s+', ' ', text).strip()
+
+    # Sentence segmentation with optional <s> tags
+    if pause_ssml:
+        sentences = re.split(r'(?<=[.!?:])\s+', text)
+        sentences = [f"<s>{s.strip()}</s>" + (" — " if pause_dash else "") for s in sentences]
+        paragraph = " ".join(sentences)
+        text = f"<p>{paragraph}</p>"
+    elif pause_dash:
+        text = re.sub(r'([.!?:])', r'\1 —', text)
+
+    # Apply prosody
+    prosody_tag = f'<prosody rate="{prosody_rate}%" pitch="{prosody_pitch}" volume="{prosody_volume}">{text}</prosody>'
+
+    # Wrap in <speak> if selected
+    if wrap_speak:
+        return f"<speak>{prosody_tag}</speak>"
+    else:
+        return prosody_tag
+
 
 # Button to generate SSML
 if st.button("Generate SSML Output"):
