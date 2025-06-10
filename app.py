@@ -97,6 +97,8 @@ if selected_tag != "Select a tag...":
 
 
 # --- MAIN PANEL ---
+from streamlit_ace import st_ace
+
 st.markdown(
     """
     <div style="padding:10px; border-left: 4px solid #1e90ff;">
@@ -108,37 +110,32 @@ st.markdown(
 
 st.title("SSML Tagging Tool")
 
-input_text = st.text_area("Paste your script text here", key="input_text_area", height=300)
+# Display editable text area with ACE Editor
+input_text = st_ace(
+    value=st.session_state.get("input_text_area", ""),
+    language="xml",
+    theme="textmate",
+    key="ace_editor",
+    height=300,
+    auto_update=True,
+    font_size=14,
+    tab_size=2,
+    show_gutter=True,
+    show_print_margin=False,
+    wrap=True
+)
 
-output_text = ""
-
-def generate_ssml(text):
-    import re
-
-    # Clean up extra whitespace
-    text = re.sub(r'\s+', ' ', text).strip()
-
-    # Sentence segmentation with optional <s> tags
-    if pause_ssml:
-        sentences = re.split(r'(?<=[.!?:])\s+', text)
-        sentences = [f"<s>{s.strip()}</s>" + (" — " if pause_dash else "") for s in sentences]
-        paragraph = " ".join(sentences)
-        text = f"<p>{paragraph}</p>"
-    elif pause_dash:
-        text = re.sub(r'([.!?:])', r'\1 —', text)
-
-    # Apply prosody
-    prosody_tag = f'<prosody rate="{prosody_rate}%" pitch="{prosody_pitch}" volume="{prosody_volume}">{text}</prosody>'
-
-    # Wrap in <speak> if selected
-    if wrap_speak:
-        return f"<speak>{prosody_tag}</speak>"
-    else:
-        return prosody_tag
-
-# Generate button
+# Button to generate SSML
 if st.button("Generate SSML Output"):
-    output_text = generate_ssml(input_text)
+    if input_text is None:
+        st.warning("Input text is empty or editor failed to load.")
+        output_text = ""
+    else:
+        st.session_state.input_text_area = input_text
+        output_text = generate_ssml(input_text)
+        st.session_state.generated_output = output_text
+else:
+    output_text = st.session_state.get("generated_output", "")
 
 # Output display
 st.text_area("Generated SSML Output", value=output_text, height=300)
