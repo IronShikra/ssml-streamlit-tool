@@ -134,7 +134,7 @@ if st.sidebar.button("Insert Tag"):
 st.markdown(
     """
     <div style="padding:10px; border-left: 4px solid #1e90ff;">
-        <strong>Note:</strong> If this app was asleep, it may take a few seconds to wake up. Please wait briefly and try again if needed.
+        <strong>Note:</strong> If this app was asleep, it may take a few seconds to wake up. Try again if needed.
     </div>
     """,
     unsafe_allow_html=True
