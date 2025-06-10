@@ -123,7 +123,7 @@ st.title("SSML Tagging Tool")
 
 # Display editable text area with ACE Editor
 input_text = st_ace(
-    value=st.session_state.get("input_text_area", ""),
+    value=st.session_state.get("ace_editor", ""),
     language="xml",
     theme="textmate",
     key="ace_editor",
@@ -168,7 +168,7 @@ if st.button("Generate SSML Output"):
         st.warning("Input text is empty or editor failed to load.")
         output_text = ""
     else:
-        st.session_state.input_text_area = input_text
+        st.session_state["ace_editor"] = input_text
         output_text = generate_ssml(input_text)
         st.session_state.generated_output = output_text
 else:
