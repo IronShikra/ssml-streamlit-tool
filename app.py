@@ -1,4 +1,6 @@
 import streamlit as st
+from streamlit_ace import st_ace
+
 
 # --- SIDEBAR CONTROLS ---
 st.sidebar.title("SSML Settings")
@@ -123,7 +125,7 @@ st.title("SSML Tagging Tool")
 
 # Display editable text area with ACE Editor
 input_text = st_ace(
-    value=st.session_state.get("ace_editor", ""),
+    value=st.session_state.get("input_text_area", ""),
     language="xml",
     theme="textmate",
     key="ace_editor",
@@ -135,6 +137,8 @@ input_text = st_ace(
     show_print_margin=False,
     wrap=True
 )
+
+st.write("DEBUG — input_text:", input_text)
 
 # Generate SSML function
 def generate_ssml(text):
