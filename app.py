@@ -93,21 +93,21 @@ if selected_tag != "Select a tag...":
 
 # Insert tag on button click
 if st.sidebar.button("Insert Tag"):
-    current_text = st.session_state.get("ace_editor", "")
-    selection = st.session_state.get("ace_selection", "")
+    current_text = input_text or ""
+    selected_text = selection or ""
     tag_text_to_insert = tag_text
 
     if "{{text}}" in tag_text_to_insert:
-        if selection:
-            tag_text_to_insert = tag_text_to_insert.replace("{{text}}", selection)
-            updated_text = current_text.replace(selection, tag_text_to_insert, 1)
+        if selected_text:
+            tag_text_to_insert = tag_text_to_insert.replace("{{text}}", selected_text)
+            updated_text = current_text.replace(selected_text, tag_text_to_insert, 1)
         else:
             tag_text_to_insert = tag_text_to_insert.replace("{{text}}", "your text here")
             updated_text = current_text + tag_text_to_insert
     else:
         updated_text = current_text + tag_text_to_insert
 
-    st.session_state["ace_editor"] = updated_text
+    st.session_state["input_text_area"] = updated_text
 
 # --- MAIN PANEL ---
 from streamlit_ace import st_ace
@@ -124,7 +124,7 @@ st.markdown(
 st.title("SSML Tagging Tool")
 
 # Display editable text area with ACE Editor
-input_text = st_ace(
+input_text, selection = st_ace(
     value=st.session_state.get("input_text_area", ""),
     language="xml",
     theme="textmate",
@@ -135,7 +135,8 @@ input_text = st_ace(
     tab_size=2,
     show_gutter=True,
     show_print_margin=False,
-    wrap=True
+    wrap=True,
+    selection=True  # <-- this returns selection text as 2nd value
 )
 
 st.write("DEBUG — input_text:", input_text)
